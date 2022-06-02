@@ -1,1 +1,1 @@
-# EcommerceApp-using-React
+# EcommerceApp-using-MERN
