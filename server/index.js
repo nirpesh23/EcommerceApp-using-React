@@ -1,25 +1,41 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import postRoutes from './routes/posts.js';
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import userRoutes from './routes/users.js';
+import postRoutes from './routes/posts.js';
+import productRoutes from './routes/products.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-const uri = "mongodb+srv://nirpesh:n5i6r3@cluster0.dhq6k.mongodb.net/ecommerce?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://nirpesh:n5i6r3@cluster0.dhq6k.mongodb.net/ecommerce?retryWrites=true&w=majority";
 
 // const CONNECTION_URL = process.env.ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.Database_Access, {useNewUrlParser: true, useUnifiedTopology: true })
     .then(()=>{
-        app.listen(PORT, () => { console.log(`Server running on port: ${PORT}`) });
+        app.listen(port, () => { console.log(`Server running on port: ${port}`) });
         console.log('Database connected');
     })
     .catch((error)=>{
         console.log(error.message)
     });
 
-
+// app.listen(port, ()=>{
+//     console.log(`Server running on port: ${port}`);
+// });
 app.use('/posts', postRoutes);
+app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/users', userRoutes);
+
+app.use((req, res, next) => {
+    res.send('<h1 style="text-align:center">Page Not Found! </h1>');
+    // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+})

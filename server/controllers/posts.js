@@ -34,17 +34,17 @@ export const createProducts = async (req, res) =>{
     res.json(product_objBody);
 };
 
-export const createUser = (req, res) => {
-    console.log('users created');
-    res.send('users created');
-}
+
 
 export const getProducts = (req, res) => {
     ProductModel.find({}, (err, result) =>{
         if(err){
             res.json(err);
         }else{
-            res.json(result);
+            res.status(200).json({
+                success: true,
+                result
+            });
         }
     })
 };
