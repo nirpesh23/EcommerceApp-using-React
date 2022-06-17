@@ -1,4 +1,3 @@
-import PostMessage from "../models/postMessage.js";
 import UserModel from "../models/Users.js";
 import ProductModel from "../models/products.js";
 
@@ -12,9 +11,6 @@ export const postfunc = async (req, res) => {
     }
 }
 
-export const createPost = (req, res) => {
-    res.send('Post Creation');
-}
 
 export const getUsers = (req, res) => {
     try{
@@ -33,29 +29,3 @@ export const createProducts = async (req, res) =>{
 
     res.json(product_objBody);
 };
-
-
-
-export const getProducts = (req, res) => {
-    ProductModel.find({}, (err, result) =>{
-        if(err){
-            res.json(err);
-        }else{
-            res.status(200).json({
-                success: true,
-                result
-            });
-        }
-    })
-};
-
-
-
-
-
-export const addToCart = (req,res) => {
-    res.send('Item added to cart');
-}
-
-
-

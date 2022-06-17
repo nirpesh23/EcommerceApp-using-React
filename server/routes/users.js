@@ -12,4 +12,5 @@ router.get('/allUsers', getUsers);
 
 router.post('/testRegister', testRegister);
 
+
 export default router;

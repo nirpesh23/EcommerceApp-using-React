@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/users.js';
-import postRoutes from './routes/posts.js';
 import productRoutes from './routes/products.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -16,7 +15,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// const uri = "mongodb+srv://nirpesh:n5i6r3@cluster0.dhq6k.mongodb.net/ecommerce?retryWrites=true&w=majority";
 
 // const CONNECTION_URL = process.env.ATLAS_URI;
 mongoose.connect(process.env.Database_Access, {useNewUrlParser: true, useUnifiedTopology: true })
@@ -28,10 +26,7 @@ mongoose.connect(process.env.Database_Access, {useNewUrlParser: true, useUnified
         console.log(error.message)
     });
 
-// app.listen(port, ()=>{
-//     console.log(`Server running on port: ${port}`);
-// });
-app.use('/posts', postRoutes);
+
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/users', userRoutes);
 

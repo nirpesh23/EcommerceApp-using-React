@@ -1,22 +1,40 @@
 import React from "react";
-import Button from "./components/Button";
 import Products from "./components/Products";
+import AddProducts from "./components/AddProducts";
+import User from "./components/user";
+import Profile from "./components/Profile";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Routes } from "react-router-dom";
+import NavBar from "./components/navbar";
 
 function App(){
-
-  const onclick = () => {
-    console.log('Click')
-  }
-
   return(
     <div>
+      <NavBar />    
+      <Routes>
+      {/* <Switch> 1st route path will only load </Switch> */}
       
-      <Products/>
-      <Button color = "green" text = "first_btn_component"/>
+        <Route exact path='/' element={<Products/>} />
+        <Route path='/add_products' element={ <AddProducts/>} />
+        <Route exact path='/profile' element={<Profile/>} />
+        <Route exact path='/user' element={<User/>} />
+      </Routes>
+      
+      {/* 
+      <Route path='/profile' component={Profile} /> */}
 
-      <Button Click={onclick} color = "red" text = "second_btn_component"/>
     </div>
   )
 }
 
 export default App; 
+
+
+
+// const onclick = () => {
+  //   console.log('Click')
+  // }
+
+// {/* <Button color = "green" text = "first_btn_component"/>
+
+//         <Button Click={onclick} color = "red" text = "second_btn_component"/> */}
