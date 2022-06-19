@@ -2,6 +2,7 @@ import React from "react";
 import Products from "./components/Products";
 import AddProducts from "./components/AddProducts";
 import User from "./components/user";
+import LoginUser from "./components/login";
 import Profile from "./components/Profile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
@@ -18,6 +19,7 @@ function App(){
         <Route path='/add_products' element={ <AddProducts/>} />
         <Route exact path='/profile' element={<Profile/>} />
         <Route exact path='/user' element={<User/>} />
+        <Route exact path='/login' element={<LoginUser/>} />
       </Routes>
       
       {/* 

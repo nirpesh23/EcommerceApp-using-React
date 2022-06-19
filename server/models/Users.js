@@ -2,7 +2,9 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import validator from "validator";
 import bcrypt from "bcryptjs";
-// import uuidv1 from "uuid/v1";
+import jwt from "jsonwebtoken";
+import { userInfo } from "os";
+
 const UserSchema = new mongoose.Schema({
     name : {
         type: String,
@@ -36,10 +38,10 @@ const UserSchema = new mongoose.Schema({
         // } 
     },
     confirmPassword:{ type: String,  required: true,
-        validator: function(val){
-            return val === this.password;
+        validate: function(value){
+            return value === this.password
         },
-        message: 'Password does not match'
+        'message': 'Password does not match'
     },
     role: { type: String, default: 'user'},
     image : {
@@ -61,6 +63,12 @@ UserSchema.pre('save', async function(next) {
     this.confirmPassword = undefined;
 
 })
+
+//this correctPassword is a functio, we can name this anything 
+//this function can then be called in controllers file
+UserSchema.methods.correctPassword = async function(candidatePassword, userPassword) { //this func takes 2 arguments which we will provide in controllers file
+    return await bcrypt.compare(candidatePassword, userPassword);
+}
 
 const UserModel = mongoose.model("Users", UserSchema);
 
