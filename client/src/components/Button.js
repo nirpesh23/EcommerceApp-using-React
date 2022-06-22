@@ -11,8 +11,6 @@ const Button = (props) => {
              <button onClick={props.Click} style={{backgroundColor:props.color}}>
               {props.text}
              </button>
-
-            
            </div>
 }
 

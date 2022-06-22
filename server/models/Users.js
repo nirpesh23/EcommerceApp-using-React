@@ -3,7 +3,6 @@ import crypto from "crypto";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { userInfo } from "os";
 
 const UserSchema = new mongoose.Schema({
     name : {
@@ -43,7 +42,9 @@ const UserSchema = new mongoose.Schema({
         },
         'message': 'Password does not match'
     },
-    role: { type: String, default: 'user'},
+    role: { type: String, default: 'user',
+            enum:['user', 'admin', 'guest']
+        },
     image : {
         public_id:{
             type: String,
@@ -59,17 +60,19 @@ UserSchema.pre('save', async function(next) {
     if(!this.isModified('password')) return next();
 
     this.password = await bcrypt.hash(this.password, 8);
-
     this.confirmPassword = undefined;
-
 })
 
-//this correctPassword is a functio, we can name this anything 
+//this correctPassword is a function 
 //this function can then be called in controllers file
 UserSchema.methods.correctPassword = async function(candidatePassword, userPassword) { //this func takes 2 arguments which we will provide in controllers file
     return await bcrypt.compare(candidatePassword, userPassword);
 }
 
+UserSchema.methods.getJwtToken = function(){
+    return jwt.sign({id : this._id}, process.env.JWT_SECRET, {expiresIn:'7 days'})
+}
+    
 const UserModel = mongoose.model("Users", UserSchema);
 
 export default UserModel;

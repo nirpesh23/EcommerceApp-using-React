@@ -7,7 +7,6 @@ const LoginUser = () =>{
 
     const loginsubmit = () =>{
         Axios.post('http://localhost:5000/api/v1/users/login', {email, password}).then(()=>{
-
         }).catch((err)=>{console.log(err)})
     }
 

@@ -1,23 +1,5 @@
 import ProductModel from "../models/products.js"
 
-// export const getProducts = (req, res, next) => {
-//     ProductModel.find({}, (err, product) => {
-//         if (err) {
-//             res.status(401).json({
-//                 success: false,
-//                 message: err.message
-//             })
-//         }else{
-//             res.status(200).json({
-//                 status : 'success',
-//                 results : product.length,
-//                 data: {
-//                     product:product
-//                 }
-//             })
-//         }
-//     })
-// }
 export const getProducts = async (req, res) => {
     try{
         await ProductModel.find({}).then((products)=>{
