@@ -14,17 +14,14 @@ function App(){
       <NavBar />    
       <Routes>
       {/* <Switch> 1st route path will only load </Switch> */}
-      
         <Route exact path='/' element={<Products/>} />
         <Route path='/add_products' element={ <AddProducts/>} />
         <Route exact path='/profile' element={<Profile/>} />
         <Route exact path='/user' element={<User/>} />
         <Route exact path='/login' element={<LoginUser/>} />
       </Routes>
-      
       {/* 
       <Route path='/profile' component={Profile} /> */}
-
     </div>
   )
 }

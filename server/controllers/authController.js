@@ -46,13 +46,3 @@ export const loginUser = async (req, res) => {
     }
 } 
 
-//we cannot pass arguments to the middleware but we need to pass arguments of who can access routes 
-//so we create a wrapper func which will return the middleware func that we want to create
-export const restrictTo = (...roles) =>{
- 
-}
-
-const protect = (req, res, next) => {
-    
-    next()
-}
