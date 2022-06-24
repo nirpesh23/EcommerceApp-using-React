@@ -7,9 +7,9 @@ import UserModel from '../models/Users.js';
 export const protect_routes = async (req, res, next) => {
     try {
         //step-1: checking if token is available in http requests
-        let token;
-        if( req.headers.authorization && req.headers.authorization.startsWith('Bearer') ){
-            token = req.headers.authorization.split(' ')[1]
+        const {token} = req.cookies
+        if( token ){         //req.headers.authorization && req.headers.authorization.startsWith('Bearer')
+            // token = req.headers.authorization.split(' ')[1]
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
             const user = await UserModel.findById(decoded.id)
 
@@ -22,14 +22,6 @@ export const protect_routes = async (req, res, next) => {
     } catch (error) {
         res.status(403).json({'message': error.message})
     }
-    
-    
-    // if(!token){ 
-    //     res.status(403).json({'message':'please log in first'})
-    // }
-
-    //step-2: verify token (JWT algorithm verifies if the signature is valid or nor / token is valid or not )
-    // const decoded = await promisify(jwt.verify(token, process.env.JWT_SECRET)).then()
 }
 
 

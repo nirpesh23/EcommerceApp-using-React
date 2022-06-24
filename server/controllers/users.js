@@ -10,7 +10,16 @@ export const getUsers = (req, res) => {
     }
 }
 
+export const updateProfile = async (req, res) => {
+    await UserModel.findByIdAndUpdate(req.user.id).then(user=>{
+        user.name = req.body.name;
+        user.email = req.body.email;
 
+    }).then(()=>{
+        res.status(200).json({success:true, 'message':`Updated ${req.body.name}`})
+    })
+
+}
 
 export const findUserById = async (req, res) => {
     const _id = req.params.id

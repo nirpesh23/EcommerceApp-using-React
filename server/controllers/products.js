@@ -1,4 +1,5 @@
 import ProductModel from "../models/products.js"
+import UserModel from "../models/Users.js"
 
 export const getProducts = async (req, res) => {
     try{
@@ -12,6 +13,17 @@ export const getProducts = async (req, res) => {
         })
     }
 }
+
+export const getSingleProduct = async (req, res) => {
+   await ProductModel.findById(req.params.id).then((product)=>{
+    console.log(product)
+    if(!product){
+        res.status(404).json({success:false, 'message': 'Product not found'})
+    }
+        res.status(200).json({success: true, data:{product}})
+   }).catch((err)=>{ console.log(err.message) })
+}
+
 
 export const addProducts = async (req, res) => {
     // const product_objBody = req.body.product;
@@ -28,15 +40,20 @@ export const addProducts = async (req, res) => {
     })
 }
 
-export const updateProduct = (req, res)=>{
-    ProductModel.findByIdAndUpdate(req.params.id).then( async (product)=>{
+export const updateProduct = async (req, res)=>{
+    try{
+    await ProductModel.findByIdAndUpdate(req.params.id).then( async (product)=>{
+        console.log(product)
         product.name = req.body.name,
         product.price = req.body.price,
         product.description = req.body.description
 
         await product.save()
             .then(()=>{ res.json({ success: true, product })})
-    })
+        })
+    }catch(err){
+        res.status(400).json({success: false, 'message': err.message})
+    }
 }
 
 export const deleteProduct = async (req, res) => {

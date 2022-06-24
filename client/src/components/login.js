@@ -6,8 +6,12 @@ const LoginUser = () =>{
     const [password, setpassword] = useState("")
 
     const loginsubmit = () =>{
-        Axios.post('http://localhost:5000/api/v1/users/login', {email, password}).then(()=>{
-        }).catch((err)=>{console.log(err)})
+        try{
+            const res  = Axios.post('http://localhost:5000/api/v1/users/login', {email, password}).then(()=>{
+            }) 
+            console.log(res)
+        }catch(err){console.log(err)}
+        
     }
 
     return(

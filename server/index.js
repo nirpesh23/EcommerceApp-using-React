@@ -6,6 +6,7 @@ import userRoutes from './routes/users.js';
 import productRoutes from './routes/products.js';
 import dotenv from 'dotenv';
 import {protect_routes} from './middleware/auth.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // const CONNECTION_URL = process.env.ATLAS_URI;
 mongoose.connect(process.env.Database_Access, {useNewUrlParser: true, useUnifiedTopology: true })
@@ -26,15 +28,7 @@ mongoose.connect(process.env.Database_Access, {useNewUrlParser: true, useUnified
     .catch((error)=>{
         console.log(error.message)
     });
-
-//app.use(our_function) before we always used function provided by express
-// app.use((req, res, next) => {
-//     if(req.method === 'GET'){
-//         res.send('site in maintainance')
-//     }else{
-//         next();
-//     }
-// })
+    
 
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/users', userRoutes);
